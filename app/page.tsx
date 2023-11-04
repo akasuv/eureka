@@ -10,6 +10,9 @@ const getMessagesFromLocalStorage = (): Array<{
   role: string;
   content: string;
 }> => {
+  if (typeof window === "undefined") {
+    return [];
+  }
   const messages = localStorage.getItem("messages");
 
   return messages ? JSON.parse(messages) : [];
