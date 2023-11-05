@@ -150,8 +150,8 @@ export default function Eureka() {
           "h-[calc(100vh - 100px)] md:max-h-[800px] overflow-scroll list-none md:w-[800px] mx-auto flex flex-col gap-y-4 px-4 md:px-8 pb-8 w-full"
         }
       >
-        {history.map((item) => (
-          <Message message={item} />
+        {history.map((item, i) => (
+          <Message message={item} key={i} />
         ))}
         {messages.map((item, i) => (
           <Message message={item} key={i} />
