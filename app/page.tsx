@@ -58,12 +58,13 @@ const Message = ({ message }: { message: Message }) => {
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
-                children={String(children).replace(/\n$/, "")}
                 style={dracula}
                 language={match[1]}
                 PreTag="div"
                 className="not-prose"
-              />
+              >
+                {String(children).replace(/\n$/, "")}
+              </SyntaxHighlighter>
             ) : (
               <code {...rest} className="bg-gray-200 not-prose px-2 rounded">
                 {children}
@@ -98,6 +99,7 @@ export default function Eureka() {
   const listRef = useRef<HTMLUListElement>(null);
   const [history] = useState(getMessagesFromLocalStorage());
   const { messages, input, handleInputChange, handleSubmit } = useChat({
+    initialMessages: history,
     onFinish: (messages) => {
       localStorage.setItem(
         "messages",
@@ -152,7 +154,7 @@ export default function Eureka() {
           <Message message={item} />
         ))}
         {messages.map((item, i) => (
-          <Message message={item} />
+          <Message message={item} key={i} />
         ))}
       </ul>
     </div>
