@@ -17,7 +17,13 @@ export async function POST(req: Request) {
   const response = await openai.chat.completions.create({
     model: "gpt-4",
     stream: true,
-    messages,
+    messages: [
+      {
+        role: "system",
+        content: "Anwser in Markdown",
+      },
+      ...messages,
+    ],
   });
   // Convert the response into a friendly text-stream
   const stream = OpenAIStream(response);
