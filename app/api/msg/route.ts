@@ -22,5 +22,6 @@ export async function GET(req: Request) {
     resume = response;
   }
 
+  //@ts-ignore
   return Response.json({ message, resume: resume });
 }

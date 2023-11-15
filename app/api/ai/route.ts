@@ -26,5 +26,6 @@ export async function POST(req: Request) {
     }
   );
 
+  //@ts-ignore
   return Response.json(run);
 }
