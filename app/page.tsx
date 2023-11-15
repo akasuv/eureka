@@ -19,7 +19,9 @@ export default function Eureka() {
     (async () => {
       while (true) {
         setIsLoading(true);
-        const res = await fetch("/api/msg").then((res) => res.json());
+        const res = await fetch("/api/msg", {
+          cache: "no-store",
+        }).then((res) => res.json());
 
         setIsLoading(false);
         setMsgs(
