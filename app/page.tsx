@@ -1,19 +1,13 @@
 // @ts-nocheck
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Archivo_Black } from "next/font/google";
-
-const archivoBlack = Archivo_Black({ subsets: ["latin"], weight: "400" });
+import { useState, useEffect } from "react";
 
 export default function Eureka() {
   const [isClient, setIsClient] = useState(false);
 
-  const listRef = useRef<HTMLUListElement>(null);
-  const [history] = useState([]);
   const [input, setInput] = useState("");
   const [msgs, setMsgs] = useState([]);
-  const [raw, setRaw] = useState([]);
   const [resume, setResume] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,29 +46,11 @@ export default function Eureka() {
     }).then((res) => res.json());
 
     setIsLoading(false);
-
-    console.log(res);
   };
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const update = () => {
-    fetch("https://nexrzogynhdfajvkxsjn.supabase.co/rest/v1/resumes", {
-      method: "POST",
-      headers: {
-        apiKey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5leHJ6b2d5bmhkZmFqdmt4c2puIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NjA1OTYsImV4cCI6MjAxNTUzNjU5Nn0.OhkifXW-ewSRIOs4unVeqv9dHGLxWFqzXEANofUyM10",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5leHJ6b2d5bmhkZmFqdmt4c2puIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NjA1OTYsImV4cCI6MjAxNTUzNjU5Nn0.OhkifXW-ewSRIOs4unVeqv9dHGLxWFqzXEANofUyM10",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: "from js",
-      }),
-    });
-  };
 
   return isClient ? (
     <div className="max-h-[100vh] overflow-hidden flex">
@@ -83,13 +59,7 @@ export default function Eureka() {
           onSubmit={handleSubmit}
           className="w-full px-4 md:px-8 flex flex-col items-center justify-center gap-2"
         >
-          <h1
-            className={
-              "text-3xl mb-4 text-pink-600 font-black " + archivoBlack.className
-            }
-          >
-            Remake
-          </h1>
+          <h1 className={"text-3xl mb-4 text-black-600 font-black"}>Remake</h1>
           <input
             className="w-full max-w-3xl border border-gray-200 rounded mb-8 shadow-md p-2 dark:text-black focus:outline-none p-4 rounded-md"
             value={input}
@@ -97,17 +67,16 @@ export default function Eureka() {
             onChange={handleInputChange}
           />
           <button
-            className="bg-black px-4 py-2 rounded text-white hover:bg-pink-600"
+            className="bg-black px-4 py-2 rounded text-white hover:opacity-80"
             type="submit"
           >
             Submit
           </button>
         </form>
-        <p className="text-pink-600 font-black min-h-[32px] h-[32px]  w-full p-8">
-          {isLoading ? "Loading..." : " "}
+        <p className="text-black-600 font-black min-h-[32px] h-[32px]  w-full p-8">
+          {isLoading ? "Syncing..." : " "}
         </p>
         <ul
-          ref={listRef}
           className={
             "mt-8 h-[calc(100vh - 100px)] md:max-h-[800px] overflow-scroll list-none md:w-[800px] mx-auto flex flex-col gap-y-4 px-4 md:px-8 pb-8 w-full"
           }
@@ -120,7 +89,6 @@ export default function Eureka() {
       <div className="w-1/2 grow h-[90vh] mr-8 mt-8 prose p-4 border border-black border-2">
         {resume ? (
           <>
-            {/* <p>{JSON.stringify(resume)}</p> */}
             <h1>{resume.name}</h1>
             <p>{resume.email}</p>
             <p>{resume.degree}</p>
